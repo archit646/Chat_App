@@ -36,18 +36,18 @@ function App() {
   }
   return (
     <>
-      <div className="w-[90%] m-auto h-screen flex items-center justify-center border-red-600 border-2">
+      <div className="w-[90%] m-auto h-screen flex items-center justify-center">
         {filledForm?
-          <div className="border bg-black h-full w-full p-4 flex flex-col gap-2">
+          <div className=" bg-black h-full w-full p-4 flex flex-col gap-2">
             <h1 className="text-2xl font-bold text-white justify-center items-center flex">Chat Room:<p className="text-red-600">{ room }</p></h1>
-            <div className="border h-[95%] flex gap-2 flex-col bg-white p-2">
+            <div className=" h-[95%] flex gap-2 flex-col bg-white p-2">
 
               {messages.map((msg, i) =>
                 
                 <p key={i} className={` inline-block py-1 px-3 rounded-full text-white ${msg.sender===name ?'self-end bg-blue-800':'self-start bg-green-800'}`}><b>{msg.sender}</b>:{msg.message}</p>)}
              
                </div>
-            <div className="border border-b-blue-800 flex w-full gap-2">
+            <div className=" flex w-full gap-2">
               <input placeholder="Text" value={text} onChange={(e)=>setText(e.target.value)} onKeyDown={(e)=>{e.key==='Enter'?sendMessage():null}} className="border p-1 w-[90%] bg-white outline-none"></input>
               <button className="bg-blue-500 px-5 py-1 text-white rounded-sm w-[10%]" onClick={sendMessage}>Send</button>
               </div>
