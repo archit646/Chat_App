@@ -6,8 +6,8 @@
 # ]
 
 from django.urls import re_path
-# from app.consumers import TextRoomConsumer
-from ..app.consumers import TextRoomConsumer
+from app.consumers import TextRoomConsumer
+
 
 websocket_urlpatterns = [
     re_path(r"ws/(?P<room_name>\w+)/$", TextRoomConsumer.as_asgi()),
