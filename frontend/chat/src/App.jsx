@@ -9,7 +9,7 @@ function App() {
   const clientRef = useRef(null)
   useEffect(() => {
     if (filledForm) {
-      clientRef.current = new WebSocket(`wss://real-chat-55l9.onrender.com/ws/${room}/`)
+      clientRef.current = new WebSocket(`wss://chatting-app-qevv.onrender.com/ws/${room}/`)
       clientRef.current.onopen = () => {
         console.log('Connected Successfully')
       }
