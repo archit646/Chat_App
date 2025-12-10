@@ -9,7 +9,8 @@ function App() {
   const clientRef = useRef(null)
   useEffect(() => {
     if (filledForm) {
-      clientRef.current = new WebSocket(`wss://web-chat-3ezl.onrender.com/ws/${room}/`)
+      // clientRef.current = new WebSocket(`wss://web-chat-3ezl.onrender.com/ws/${room}/`)
+      clientRef.current = new WebSocket(`${import.meta.env.VITE_WEBSOCKET_URL}${room}/`);
       clientRef.current.onopen = () => {
         console.log('Connected Successfully')
       }
