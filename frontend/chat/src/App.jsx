@@ -5,42 +5,53 @@ function App() {
   const [room, setRoom] = useState('')
   const [text, setText] = useState('')
   const [messages, setMessages] = useState([])
-  const [filledForm, setFilledForm] = useState(false)
-  const clientRef = useRef(null)
-  useEffect(() => {
-    if (filledForm) {
-      clientRef.current = new WebSocket(`wss://web-chat-3ezl.onrender.com/ws/${room}/`)
-      // clientRef.current = new WebSocket(`${import.meta.env.VITE_WEBSOCKET_URL}${room}/`);
-      clientRef.current.onopen = () => {
-        console.log('Connected Successfully')
-      }
-      clientRef.current.onmessage = (e) => {
-        const data = JSON.parse(e.data)
-        setMessages((old) => [...old, data])
-      }
-      clientRef.current.onerror = (e) => {
-        console.log("Error:", e)
-      }
-      return () => clientRef.current.onclose()
-    }
+  // const [filledForm, setFilledForm] = useState(false)
+  const [state, setState] = useState('Connect')
 
-  }, [filledForm])
+
+
+  const clientRef = useRef(null)
+  const startConnection = () => {
+    if (!name.trim() || !room.trim()) {
+      return alert("Please enter Name and Room")
+    }
+    setState('Connecting...')
+
+    clientRef.current = new WebSocket(`wss://web-chat-3ezl.onrender.com/ws/${room}/`)
+    // clientRef.current = new WebSocket(`${import.meta.env.VITE_WEBSOCKET_URL}${room}/`);
+    clientRef.current.onopen = () => {
+      console.log('Connected Successfully')
+      setState('Connected')
+    }
+    clientRef.current.onmessage = (e) => {
+      const data = JSON.parse(e.data)
+      setMessages((old) => [...old, data])
+    }
+    clientRef.current.onerror = (e) => {
+      console.log("Error:", e)
+    }
+    return () => clientRef.current.onclose()
+
+
+  }
+
+
   const sendMessage = () => {
     if (text.trim() != '') {
-      if (clientRef.current.readyState === WebSocket.OPEN) {
-        clientRef.current.send(JSON.stringify({
-          type: 'message',
-          message: text,
-          sender: name
-        }))
-        setText('')
-      }
+      clientRef.current.send(JSON.stringify({
+        type: 'message',
+        message: text,
+        sender: name
+      }))
+      setText('')
+
+
     }
   }
   return (
     <>
       <div className="w-[90%] m-auto h-screen flex items-center justify-center">
-        {filledForm ?
+        {state === 'Connected' ?
           <div className=" bg-black h-full w-full p-4 flex flex-col gap-2">
             <h1 className="text-2xl font-bold text-white justify-center items-center flex">Chat Room:<p className="text-red-600">{room}</p></h1>
             <div className=" h-[95%] flex gap-2 flex-col bg-white p-2">
@@ -59,7 +70,11 @@ function App() {
             <h2 className="text-xl font-bold text-blue-700 ">Enter Details</h2>
             <input placeholder="Name" value={name} className="border p-1 bg-white outline-none" onChange={(e) => setName(e.target.value)} onKeyDown={(e) => { e.key === 'Enter' ? setFilledForm(true) : null }}></input>
             <input placeholder="Room" value={room} className="border p-1 bg-white outline-none" onChange={(e) => setRoom(e.target.value)} onKeyDown={(e) => { e.key === 'Enter' ? setFilledForm(true) : null }}></input>
-            <button className="bg-blue-500 px-5 text-white rounded-lg" onClick={() => setFilledForm(true)}>Join</button>
+            {/* <button className="bg-blue-500 px-5 text-white rounded-lg" onClick={() => setFilledForm(true)}>{ clientRef.current.readyState===WebSocket.CONNECTING?'Connecting...':'Join'}</button> */}
+            <button className={`bg-blue-500 px-5 py-1 text-white rounded-lg ${state === 'Connecting...' ? 'cursor-not-allowed opacity-50' : ''}`} onClick={startConnection}> {state}</button>
+
+
+
           </div>
         }
       </div>
