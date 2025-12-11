@@ -52,7 +52,7 @@ function App() {
     <>
       <div className="w-[90%] m-auto h-screen flex items-center justify-center">
         {state === 'Connected' ?
-          <div className=" bg-black h-[90vh] w-full p-4 flex flex-col gap-2">
+          <div className=" bg-black h-[65vh] sm:h-[90vh] w-full p-4 flex flex-col gap-2">
             <h1 className="text-2xl font-bold text-white justify-center items-center flex">Chat Room:<p className="text-red-600">{room}</p></h1>
             <div className=" h-[95%] flex gap-2 flex-col bg-white p-2">
 
