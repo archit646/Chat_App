@@ -7,6 +7,10 @@ function App() {
   const [messages, setMessages] = useState([])
   // const [filledForm, setFilledForm] = useState(false)
   const [state, setState] = useState('Connect')
+  const msgEndRef = useRef(null);
+  useEffect(() => {
+    msgEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages])
 
 
 
@@ -58,8 +62,8 @@ function App() {
 
               {messages.map((msg, i) =>
 
-                <p key={i} className={`wrap-break-word max-w-[60%] inline-block py-1 px-3 rounded-lg text-white ${msg.sender === name ? 'self-end bg-blue-800' : 'self-start bg-green-800'}`}><b>{msg.sender}</b>:{msg.message}</p>)}
-
+                <p key={i} className={`wrap-break-word max-w-[60%] inline-block py-1 px-3 rounded-lg text-white ${msg.sender === name ? 'self-end bg-blue-800' : 'self-start bg-green-800'}`}><b className="text-yellow-200">{msg.sender}</b>:{msg.message}</p>)}
+              <div ref={msgEndRef}></div>
             </div>
             <div className=" flex w-full gap-2">
               <textarea placeholder="Text" value={text} onChange={(e) => setText(e.target.value)} onKeyDown={(e) => { e.key === 'Enter' ? sendMessage() : null }} className="border p-1 w-[85%] placeholder:text-xl bg-white outline-none"></textarea>
