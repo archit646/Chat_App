@@ -52,18 +52,18 @@ function App() {
     <>
       <div className="w-[90%] m-auto h-screen flex items-center justify-center">
         {state === 'Connected' ?
-          <div className=" bg-black h-full w-full p-4 flex flex-col gap-2">
+          <div className=" bg-black h-[90vh] w-full p-4 flex flex-col gap-2">
             <h1 className="text-2xl font-bold text-white justify-center items-center flex">Chat Room:<p className="text-red-600">{room}</p></h1>
             <div className=" h-[95%] flex gap-2 flex-col bg-white p-2">
 
               {messages.map((msg, i) =>
 
-                <p key={i} className={` inline-block py-1 px-3 rounded-full text-white ${msg.sender === name ? 'self-end bg-blue-800' : 'self-start bg-green-800'}`}><b>{msg.sender}</b>:{msg.message}</p>)}
+                <p key={i} className={`wrap-break-word max-w-[60%] inline-block py-1 px-3 rounded-lg text-white ${msg.sender === name ? 'self-end bg-blue-800' : 'self-start bg-green-800'}`}><b>{msg.sender}</b>:{msg.message}</p>)}
 
             </div>
             <div className=" flex w-full gap-2">
-              <input placeholder="Text" value={text} onChange={(e) => setText(e.target.value)} onKeyDown={(e) => { e.key === 'Enter' ? sendMessage() : null }} className="border p-1 w-[90%] bg-white outline-none"></input>
-              <button className="bg-blue-500 px-5 py-1 text-white rounded-sm w-[10%]" onClick={sendMessage}>Send</button>
+              <textarea placeholder="Text" value={text} onChange={(e) => setText(e.target.value)} onKeyDown={(e) => { e.key === 'Enter' ? sendMessage() : null }} className="border p-1 w-[85%] placeholder:text-xl bg-white outline-none"></textarea>
+              <button className="bg-blue-500 px-5 py-1 text-white rounded-sm w-[15%] flex justify-center items-center font-semibold" onClick={sendMessage}>Send</button>
             </div>
           </div>
           : <div className="flex flex-col bg-gray-400 p-5 items-center gap-2 rounded-xl">
