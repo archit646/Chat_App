@@ -54,7 +54,7 @@ function App() {
         {state === 'Connected' ?
           <div className=" bg-black h-[60vh] sm:h-[90vh] w-full p-4 flex flex-col gap-2">
             <h1 className="text-2xl font-bold text-white justify-center items-center flex">Chat Room:<p className="text-red-600">{room}</p></h1>
-            <div className=" h-[95%] overflow-auto flex gap-2 flex-col bg-white p-2">
+            <div className=" h-[95%] overflow-y-scroll flex gap-2 flex-col bg-white p-2">
 
               {messages.map((msg, i) =>
 
